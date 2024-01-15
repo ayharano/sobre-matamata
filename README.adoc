@@ -1,0 +1,16 @@
+= Sobre _matamata_
+
+Este repositório contém uma apresentação sobre o projeto
+https://github.com/ayharano/matamata[`ayharano/matamata`]
+usando https://asciidoctor.org/[Asciidoctor] /
+https://asciidoctor.org/docs/asciidoctor-revealjs[Asciidoctor-RevealJS].
+
+== Resumo
+Foi solicitado o desenvolvimento de um sistema de torneio eliminatório. O enunciado é intencionalmente simples e tem regras limitadas.
+
+Esta sessão apresenta uma visão geral do processo de desenvolvimento do sistema, desde a definição dos conceitos básicos _Competidor_, _Torneio_, e _Partida_, até as restrições e ferramentas utilizadas.
+
+== Slides
+Os arquivos fontes estão em `docs`
+
+Os detalhes de licença encontram-se no arquivo `LICENSE` do diretório.
