@@ -1,5 +1,6 @@
 == Melhorias Feitas
 
+[%step]
 * Refatoração para melhorar legibilidade
 
 === Melhorias Feitas

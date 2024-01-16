@@ -10,7 +10,7 @@
 [%step]
 * Modelos SQLAlchemy
 * Modelos pydantic
-* FastAPI routes
+* Rotas FastAPI
 * Serviços
 
 === Modelo SQLAlchemy `Competitor`
@@ -85,8 +85,9 @@ seja stem:[M] o número de partidas de entrada.
 
 Temos que
 
-- stem:[R = \lfloor\log_{2}(C-1)\rfloor]
-- stem:[M = 2^{R}]
+stem:[R = \lfloor\log_{2}(C-1)\rfloor]
+
+stem:[M = 2^{R}]
 
 === `start_tournament`
 [%step]
@@ -98,6 +99,400 @@ Temos que
 * Insere partidas em lote no banco de dados
 * Ajusta as referências de próximas partidas
 
+=== Torneio de 5 competidores
+Parâmetros do torneio
+
+[%step]
+--
+stem:[C = 5]
+--
+[%step]
+--
+stem:[R = \lfloor\log_{2}(C-1)\rfloor = 2]
+--
+[%step]
+--
+stem:[M = 2^{R} = 4]
+--
+
+=== Torneio de 5 competidores
+Montagem de dados de partida com lista de dicionários:
+
+[%step]
+--
+[cols="m,m,m,m,m,m,m,m"]
+|===
+a|r2p0
+a|r2p1
+a|r2p2
+a|r2p3
+a|
+a|
+a|
+a|
+|===
+--
+[%step]
+--
+[cols="m,m,m,m,m,m,m,m"]
+|===
+a|r2p0
+a|r2p1
+a|r2p2
+a|r2p3
+a|r1p0
+a|r1p1
+a|
+a|
+|===
+--
+[%step]
+--
+[cols="m,m,m,m,m,m,m,m"]
+|===
+a|r2p0
+a|r2p1
+a|r2p2
+a|r2p3
+a|r1p0
+a|r1p1
+a|r0p0
+a|
+|===
+--
+[%step]
+--
+[cols="m,m,m,m,m,m,m,m"]
+|===
+a|r2p0
+a|r2p1
+a|r2p2
+a|r2p3
+a|r1p0
+a|r1p1
+a|r0p0
+a|r0p1
+|===
+--
+
+=== Torneio de 5 competidores
+
+Antes de sequência aleatória:
+[cols="m,m,m,m,m"]
+|===
+|A
+|B
+|C
+|D
+|E
+|===
+
+[%step]
+--
+Após definição de sequência aleatória:
+[cols="m,m,m,m,m"]
+|===
+|B
+|C
+|A
+|E
+|D
+|===
+--
+
+=== Torneio de 5 competidores
+
+Aloca competidores nas partidas de entrada
+
+Competidores
+[cols="m,m,m,m,m"]
+|===
+|B
+|C
+|A
+|E
+|D
+|===
+
+Rodada 2 (quartas de final)
+[cols="m,m,m,m"]
+|===
+a|r2p0
+
+cA `null`
+
+cB `null`
+a|r2p1
+
+cA `null`
+
+cB `null`
+a|r2p2
+
+cA `null`
+
+cB `null`
+a|r2p3
+
+cA `null`
+
+cB `null`
+|===
+
+=== Torneio de 5 competidores
+
+Aloca competidores nas partidas de entrada
+
+Competidores
+[cols="m,m,m,m,m"]
+|===
+|*B*
+|C
+|A
+|E
+|D
+|===
+
+Rodada 2 (quartas de final)
+[cols="m,m,m,m"]
+|===
+a|r2p0
+
+cA *B*
+
+cB `null`
+a|r2p1
+
+cA `null`
+
+cB `null`
+a|r2p2
+
+cA `null`
+
+cB `null`
+a|r2p3
+
+cA `null`
+
+cB `null`
+|===
+
+=== Torneio de 5 competidores
+
+Aloca competidores nas partidas de entrada
+
+Competidores
+[cols="m,m,m,m,m"]
+|===
+|B
+|*C*
+|A
+|E
+|D
+|===
+
+Rodada 2 (quartas de final)
+[cols="m,m,m,m"]
+|===
+a|r2p0
+
+cA B
+
+cB `null`
+a|r2p1
+
+cA *C*
+
+cB `null`
+a|r2p2
+
+cA `null`
+
+cB `null`
+a|r2p3
+
+cA `null`
+
+cB `null`
+|===
+
+=== Torneio de 5 competidores
+
+Aloca competidores nas partidas de entrada
+
+Competidores
+[cols="m,m,m,m,m"]
+|===
+|B
+|C
+|*A*
+|E
+|D
+|===
+
+Rodada 2 (quartas de final)
+[cols="m,m,m,m"]
+|===
+a|r2p0
+
+cA B
+
+cB `null`
+a|r2p1
+
+cA C
+
+cB `null`
+a|r2p2
+
+cA *A*
+
+cB `null`
+a|r2p3
+
+cA `null`
+
+cB `null`
+|===
+
+=== Torneio de 5 competidores
+
+Aloca competidores nas partidas de entrada
+
+Competidores
+[cols="m,m,m,m,m"]
+|===
+|B
+|C
+|A
+|*E*
+|D
+|===
+
+Rodada 2 (quartas de final)
+[cols="m,m,m,m"]
+|===
+a|r2p0
+
+cA B
+
+cB `null`
+a|r2p1
+
+cA C
+
+cB `null`
+a|r2p2
+
+cA A
+
+cB `null`
+a|r2p3
+
+cA *E*
+
+cB `null`
+|===
+
+=== Torneio de 5 competidores
+
+Aloca competidores nas partidas de entrada
+
+Competidores
+[cols="m,m,m,m,m"]
+|===
+|B
+|C
+|A
+|E
+|*D*
+|===
+
+Rodada 2 (quartas de final)
+[cols="m,m,m,m"]
+|===
+a|r2p0
+
+cA B
+
+cB *D*
+a|r2p1
+
+cA C
+
+cB `null`
+a|r2p2
+
+cA A
+
+cB `null`
+a|r2p3
+
+cA E
+
+cB `null`
+|===
+
+=== Torneio de 5 competidores
+
+Aloca competidores nas partidas de entrada
+
+Competidores
+[cols="m,m,m,m,m"]
+|===
+|B
+|C
+|A
+|E
+|D
+|===
+
+Rodada 2 (quartas de final)
+[cols="m,m,m,m"]
+|===
+a|r2p0
+
+cA B
+
+cB D
+a|r2p1
+
+cA C
+
+cB `null`
+a|r2p2
+
+cA A
+
+cB `null`
+a|r2p3
+
+cA E
+
+cB `null`
+|===
+
+
+=== Torneio de 5 competidores
+
+Ajusta partidas seguintes às automaticamente ganhas
+
+Rodada 1 (semifinal)
+[cols="m,m"]
+|===
+a|r1p0
+
+cA `null`
+
+cB C
+a|r1p1
+
+cA A
+
+cB E
+|===
+
 === `register_match_result`
 [%step]
 * Valida a partida para registrar o resultado
@@ -105,6 +500,62 @@ Temos que
 [%step]
 ** Atualiza os dados de próxima partida do vencedor
 ** Atualiza os dados de próxima partida do perdedor
+
+
+=== Torneio de 3 competidores
+
+Rodada 1 (semifinal)
+[cols="m,m"]
+|===
+a|r1p0
+
+cA B
+
+cB C
+a|r1p1
+
+cA A
+
+cB `null`
+|===
+
+Rodada 0 (final e terceiro lugar)
+[cols="m,m"]
+|===
+a|r0p0
+
+cA `null`
+
+cB A
+a|r0p1
+
+cA `null`
+
+cB `null`
+|===
+
+
+=== Torneio de 3 competidores
+
+Competitor C ganhou r1p0
+
+Rodada 0 (final e terceiro lugar)
+[cols="m,m"]
+|===
+a|r0p0
+
+cA *C*
+
+cB A
+a|r0p1
+
+cA *B*
+
+cB `null`
+
+winner *B*
+|===
+
 
 === OpenAPI
 image:2024.1.0.openapi.png[OpenAPI para versão de referência]
