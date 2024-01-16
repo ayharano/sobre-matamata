@@ -1,0 +1,17 @@
+== Architecture Decision Record
+
+image:ADR.png[exemplo de ADR através do ADR 1 do projeto,width=800]
+
+=== ADR
+[%step]
+image:ADR2.png[título e data do ADR2,width=800]
+[%step]
+image:ADR3.png[título e data do ADR3,width=800]
+[%step]
+image:ADR4.png[título e data do ADR4,width=800]
+
+=== ADR
+[%step]
+image:ADR5.png[título e data do ADR5,width=800]
+[%step]
+image:ADR6.png[título e data do ADR6,width=800]

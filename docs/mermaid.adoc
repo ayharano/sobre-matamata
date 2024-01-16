@@ -1,0 +1,123 @@
+:mmdc: node_modules/.bin/mmdc
+:imagesdir: images
+
+
+[mermaid, "mermaid-racional", "svg"]
+....
+stateDiagram-v2
+direction LR
+    state "Documentação" as doc
+    state "Implementação com Testes" as implement
+    [*] --> doc
+    doc --> implement
+    implement --> doc
+    implement --> [*]
+....
+
+
+[mermaid, "mermaid-ciclo-vida-partida", "svg"]
+....
+stateDiagram-v2
+direction LR
+    state "Cria Partida" as cria
+    state "Registra Competidor(es)" as competidores
+    state "Inicia Partida" as inicia
+    state "Define Vencedor (e Perdedor) da Partida" as resultado
+    state "Ajusta Partida Seguinte" as ajusta
+
+    [*] --> cria
+    cria --> competidores
+    competidores --> competidores: uma ou duas vezes
+    competidores --> inicia
+    inicia --> resultado
+    resultado --> ajusta
+    resultado --> [*]
+    ajusta --> [*]
+....
+
+
+[mermaid, "mermaid-ciclo-vida-torneio", "svg"]
+....
+stateDiagram-v2
+direction LR
+    state "Cria Torneio" as cria
+    state "Registra Competidor(es)" as registra
+    state "Cria Rodadas e Partidas" as rodadas
+    state "Define Vencedor (e Perdedor) da Partida" as partidas
+    state "Define Vencedor do Torneio" as vencedor
+
+    [*] --> cria
+    cria --> registra
+    registra --> registra: uma ou mais vezes
+    registra --> rodadas
+    rodadas --> partidas
+    partidas --> partidas: uma ou mais vezes
+    partidas --> vencedor
+    vencedor --> [*]
+....
+
+
+[mermaid, "mermaid-er", "svg"]
+....
+erDiagram
+    COMPETIDOR one or more -- zero or more TORNEIO : "compete em"
+    COMPETIDOR only one -- zero or more TORNEIO : "é vencedor de"
+    TORNEIO only one -- one or more PARTIDA : possui
+    TORNEIO only one -- only one PARTIDA : "possui uma de final"
+    TORNEIO only one -- zero or one PARTIDA : "possui uma de terceiro lugar"
+    COMPETIDOR one or more -- zero or more PARTIDA : "compete em"
+    COMPETIDOR only one -- zero or more PARTIDA : "é o vencedor de"
+    COMPETIDOR zero or one -- zero or more PARTIDA : "é o vencedor de"
+    PARTIDA zero or more -- zero or more PARTIDA : precede
+....
+
+
+[mermaid, "mermaid-db", "svg"]
+....
+erDiagram
+    Competitor {
+        int id PK
+        uuid uuid UK
+        timestamp created
+        timestamp updated
+        string label
+    }
+
+    Tournament {
+        int id PK
+        uuid uuid UK
+        timestamp created
+        timestamp updated
+        string label
+        timestamp matchesCreation
+        int competitors
+        int startingRound
+    }
+
+    Match {
+        int id PK
+        uuid uuid UK
+        timestamp created
+        timestamp updated
+        int tournament FK
+        int round
+        int position
+        int competitorA FK
+        int competitorB FK
+        timestamp resultRegistration
+        int winner FK
+        int loser FK
+    }
+
+    TournamentCompetitor {
+        int tournament PK, FK
+        int competitor PK, FK
+        timestamp created
+        timestamp updated
+        int nextMatch FK
+    }
+
+    Competitor only one -- zero or more TournamentCompetitor : "é"
+    Tournament only one -- one or more TournamentCompetitor : registra
+    Tournament only one -- one or more Match : possui
+....

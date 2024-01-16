@@ -1,0 +1,35 @@
+== Linguagem Ubíqua
+
+Competidor (_Competitor_):: Um sujeito (indivíduo, time, etc.) que compete em zero ou mais torneios
+Torneio (_Tournament_):: Usado ubiquamente como representação de torneio de eliminação única
+Partida (_Match_):: Confronto de dois competidores, com um resultado de um vencedor e um perdedor. É possível casos em que possua somente um competidor e por padrão tal competidor é o vencedor
+
+=== Linguagem Ubíqua
+
+Usuário (_User_):: Um cliente que interage com o sistema de gerenciamento usando ciclos requisição-resposta de API REST
+
+== Regras Estabelecidas
+
+Foram definidas 14 regras sendo as mais importantes:
+
+* Um torneio deve ter ao menos um competidor para a criação de suas partidas
+* O sistema é responsável pela geração aleatória inicial das partidas e das rodadas seguindo as regras
+* Uma partida deve ser criada com um competidor ou duas partidas anteriores
+
+=== Ressalvas
+
+Tão importante quanto as regras são as ressalvas
+
+* Um competidor não pode desistir do torneio
+* Não registraremos a pontuação da partida, somente o vencedor e o perdedor
+* O sistema não permite empate entre os competidores
+
+
+=== Ciclo de Vida da Partida
+
+image:mermaid-ciclo-vida-partida.svg[ciclo de vida da partida]
+
+
+=== Ciclo de Vida do Torneio
+
+image:mermaid-ciclo-vida-torneio.svg[ciclo de vida do torneio]

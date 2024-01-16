@@ -1,0 +1,7 @@
+== Documentação
+
+1. Método de Documentação
+2. Linguagem Ubíqua
+3. Regras Estabelecidas
+4. Mapeamento de Dados
+5. API e Endpoints

@@ -1,0 +1,45 @@
+== Diagrama Entidade Relacionamento
+
+image:mermaid-er.svg[diagrama entidade relacionamento,width=640]
+
+=== Tabelas do Banco de Dados Relacional
+
+image:mermaid-db.svg[diagrama entidade relacionamento do banco relacional,width=600]
+
+=== Campos de identificação
+
+`id`:: Inteiro para indexação das instâncias
+`uuid`:: Campo UUID para exposição externa da instância
+`label`:: Representação textual da instância
+
+=== Carimbo de tempo
+
+`created`:: Criação da instância
+`updated`:: Última atualização da instância
+`Tournament.matchesCreation`:: Criação das partidas do torneio
+`Matches.resultRegistration`:: Registro do resultado de partida
+
+
+=== Dados de Torneio
+
+`competitors`:: Inteiro positivo representando quantidade de competidores durante o início do torneio
+`startingRound`:: Inteiro não-negativo representando a rodada de início do torneio
+
+
+=== Dados de Partida
+
+`round`:: Inteiro não-negativo representando quantidade de rodadas até a partida final
+`position`:: Inteiro não-negativo representando a posição da partida na rodada do torneio
+
+
+=== Dados de Partida
+
+`competitorA`:: Referência para um competidor, aqui chamado de Competidor A
+`competitorB`:: Referência para um competidor, aqui chamado de Competidor B
+`winner`:: Referência para o vencedor
+`loser`:: Referência para o perdedor
+
+
+=== Dados de Torneio e Competidor
+
+`nextMatch`:: Referência a próxima partida do competidor no torneio

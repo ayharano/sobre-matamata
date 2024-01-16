@@ -1,0 +1,8 @@
+== Racional do Desenvolvimento
+
+image:mermaid-racional.svg[máquina de estados do racional]
+
+=== Versão de Referência
+
+image:20240105_matamata_qr.jpg[versão específica de matamata,width=480] +
+[.decent]#`https://bit.ly/20240105_matamata[bit.ly/20240105_matamata]`#

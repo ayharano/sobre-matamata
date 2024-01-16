@@ -1,0 +1,43 @@
+= Sobre _matamata_
+:author: Alexandre Harano @ayharano <email@ayharano.dev>
+:date: 2024-01-16
+:revealjs_theme: solarized
+:revealjs_autoSlide: 5000
+:revealjs_history: true
+:revealjs_fragmentInURL: true
+:revealjs_viewDistance: 5
+:revealjs_width: 1408
+:revealjs_height: 792
+:revealjs_controls: true
+:revealjs_controlsLayout: edges
+:revealjs_controlsTutorial: true
+:revealjs_slideNumber: c/t
+:revealjs_showSlideNumber: speaker
+:revealjs_autoPlayMedia: true
+:revealjs_defaultTiming: 42
+:imagesdir: images
+:source-highlighter: highlight.js
+:highlightjs-languages: json, python
+:highlightjs-main-theme: solarized-dark
+:stem:
+
+
+include::presentation-intro.adoc[]
+
+include::presentation-racional.adoc[]
+
+include::presentation-documentacao.adoc[]
+
+include::presentation-adr.adoc[]
+
+include::presentation-linguagem.adoc[]
+
+include::presentation-dados.adoc[]
+
+include::presentation-api.adoc[]
+
+include::presentation-implementacao.adoc[]
+
+include::presentation-melhorias.adoc[]
+
+include::presentation-eu.adoc[]

@@ -1,0 +1,137 @@
+== Implementação
+
+* CPython 3.12
+* uvicorn
+* FastAPI (pydantic + Starlette) + pydantic-settings
+* SQLAlchemy + SQLAlchemy-Utils + Alembic
+* pytest + pytest-cov + factory_boy
+
+=== Ordem de Desenvolvimento
+[%step]
+* Modelos SQLAlchemy
+* Modelos pydantic
+* FastAPI routes
+* Serviços
+
+=== Modelo SQLAlchemy `Competitor`
+
+* CHECK Constraint
+** `NOT(TRIM(label) LIKE '')`
+
+=== Modelo SQLAlchemy `Tournament`
+
+* CHECK Constraint
+** `NOT(TRIM(label) LIKE '')`
+** `(matchesCreation IS NULL AND numberCompetitors IS NULL AND startingRound IS NULL) OR (matchesCreation IS NOT NULL AND numberCompetitors IS NOT NULL AND startingRound IS NOT NULL AND numberCompetitors >= 1 AND startingRound >= 0)`
+
+
+=== Modelo SQLAlchemy `TournamentCompetitor`
+
+* UNIQUE Constraint
+** `tournament_id, competitor_id`
+
+
+=== Modelo SQLAlchemy `Match`
+
+* UNIQUE Constraint
+** `tournament_id, round, position`
+* CHECK Constraint
+** `round >= 0`
+** `position >= 0`
+** `(round == 0 AND position < 2) OR (round > 0 AND position < pow(2, round))`
+
+
+=== Modelo SQLAlchemy `Match`
+
+* CHECK Constraint
+** `(competitorA_id IS NULL AND competitorB_id IS NULL) OR (competitorA_id <> competitorB_id)`
+** `(resultRegistration IS NULL AND winner_id is NULL) OR (resultRegistration IS NOT NULL AND winner_id IS NOT NULL)`
+** `(resultRegistration IS NULL AND loser_id is NULL) OR (resultRegistration IS NOT NULL AND loser_id is NULL) OR (resultRegistration IS NOT NULL AND loser_id IS NOT NULL)`
+
+
+=== Modelos pydantic de Payload
+
+* `CompetitorPayloadSchema` (`label`)
+* `TournamentPayloadSchema` (`label`)
+* `TournamentCompetitorPayloadSchema` (`competitor_uuid`)
+* `WinnerPayloadSchema` (`winner_uuid`)
+
+
+=== Modelos pydantic de Response
+
+* `CompetitorSchema` (`label` e `uuid`)
+* `TournamentSchema` (`label` e `uuid`)
+* `TournamentCompetitorSchema` (`tournament` e `competitor`)
+* `TournamentStartSchema` (`tournament`, `competitor` e `matches`)
+* `TournamentMatchesSchema` (`tournament`, `past` e `upcoming`)
+* `TournamentResultSchema` (`tournament` e `top4`)
+* `MatchSchema` (`uuid`, `tournament`, `round`, `position`, `competitorA`, `competitorB`, `winner` e `loser`)
+
+
+=== Serviços
+
+* `start_tournament`
+* `register_match_result`
+
+=== Parâmetros do Torneio
+
+Exceto para o caso de um único competidor,
+
+seja stem:[C] o número de competitores registrados,
+
+seja stem:[R] o número da rodada inicial, e
+
+seja stem:[M] o número de partidas de entrada.
+
+Temos que
+
+- stem:[R = \lfloor\log_{2}(C-1)\rfloor]
+- stem:[M = 2^{R}]
+
+=== `start_tournament`
+[%step]
+* Calcula parâmetros do torneio (competidores, rodada de entrada, quantidade de partidas de entrada)
+* Prepara dados de partida como lista de dicionários
+* Prepara sequência aleatória de competidores
+* Aloca competidores nas partidas de entrada
+* Calcula as partidas automaticamente ganhas e ajusta as seguintes
+* Insere partidas em lote no banco de dados
+* Ajusta as referências de próximas partidas
+
+=== `register_match_result`
+[%step]
+* Valida a partida para registrar o resultado
+* Ajusta as próximas partidas
+[%step]
+** Atualiza os dados de próxima partida do vencedor
+** Atualiza os dados de próxima partida do perdedor
+
+=== OpenAPI
+image:2024.1.0.openapi.png[OpenAPI para versão de referência]
+
+=== pytest-cov
+
+```
+Name                                           Stmts   Miss  Cover
+------------------------------------------------------------------
+src/matamata/__init__.py                           1      0   100%
+src/matamata/database.py                           7      2    71%
+src/matamata/main.py                               7      0   100%
+src/matamata/models/__init__.py                    5      0   100%
+src/matamata/models/base.py                       14      0   100%
+src/matamata/models/competitor.py                 13      0   100%
+src/matamata/models/constants.py                  10      0   100%
+src/matamata/models/exceptions.py                  4      0   100%
+src/matamata/models/match.py                      25      0   100%
+src/matamata/models/tournament.py                 29      0   100%
+src/matamata/models/tournament_competitor.py      14      0   100%
+src/matamata/routers/__init__.py                   0      0   100%
+src/matamata/routers/competitor.py                13      0   100%
+src/matamata/routers/match.py                     70      0   100%
+src/matamata/routers/tournament.py                83      0   100%
+src/matamata/schemas.py                           62      2    97%
+src/matamata/services.py                          81      2    98%
+src/matamata/settings.py                           5      0   100%
+------------------------------------------------------------------
+TOTAL                                            443      6    99%
+```

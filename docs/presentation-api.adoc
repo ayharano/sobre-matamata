@@ -1,0 +1,547 @@
+== API e Endpoints
+
+Dividido em
+
+- Escrita
+- Leitura
+
+=== API e Endpoints de Escrita
+
+[frame=none,cols="h,m"]
+|===
+|
+|Proposta inicial
+
+a|[.small]#Cadastro de novos torneios#
+|POST /tournament
+
+a|[.small]#Cadastro dos competidores#
+|POST /tournament/<t_id>/competitor
+
+a|[.small]#Cadastro de resultado de partida#
+|POST /tournament/<t_id>/match/<m_id>
+|===
+
+
+=== API e Endpoints de Leitura
+
+[frame=none,cols="h,m"]
+|===
+|
+|Proposta inicial
+
+a|[.small]#Listagem de partidas#
+|GET /tournament/<t_id>/match
+
+a|[.small]#Exibição do TOP 4#
+|GET /tournament/<t_id>/result
+|===
+
+
+=== API e Endpoints de Escrita (modificado)
+
+[frame=none,cols=".^h,m,m"]
+|===
+|
+|Proposta inicial
+|Proposta final
+
+a|[.small]#Cadastro de novos competidores#
+|
+|POST /competitor
+
+a|[.small]#Cadastro de novos torneios#
+|POST /tournament
+|POST /tournament
+
+a|[.small]#Cadastro dos competidores#
+|POST /tournament/<t_id>/competitor
+|POST /tournament/<t_uuid>/competitor
+|===
+
+
+=== API e Endpoints de Escrita (modificado)
+
+[frame=none,cols=".^h,m,m"]
+|===
+|
+|Proposta inicial
+|Proposta final
+
+a|[.small]#Início do torneio#
+|
+|POST /tournament/<t_uuid>/start
+
+a|[.small]#Cadastro de resultado de partida#
+|POST /tournament/<t_id>/match/<m_id>
+|POST /match/<m_uuid>
+|===
+
+
+=== API e Endpoints de Leitura (modificado)
+
+[frame=none,cols=".^h,m,m"]
+|===
+|
+|Proposta inicial
+|Proposta final
+
+a|[.small]#Listagem de partidas#
+|GET /tournament/<t_id>/match
+|GET /tournament/<t_uuid>/match
+
+a|[.small]#Exibição do TOP 4#
+|GET /tournament/<t_id>/result
+|GET /tournament/<t_uuid>/result
+|===
+
+
+=== `POST /competitor`
+
+Status code: 201 Created
+
+[frame=none,cols="m,m"]
+|===
+|Payload
+|Response
+
+a|
+[source,json]
+----
+{
+  "label": "South Korea"
+}
+----
+a|
+[source,json]
+----
+{
+  "uuid": "5d1bd1d1-2679-432a-ac11-ebfebfa1bce9",
+  "label": "South Korea"
+}
+----
+|===
+
+
+=== `POST /tournament`
+
+Status code: 201 Created
+
+[frame=none,cols="m,m"]
+|===
+|Payload
+|Response
+
+a|
+[source,json]
+----
+{
+  "label": "2002 FIFA World Cup"
+}
+----
+a|
+[source,json]
+----
+{
+  "uuid": "03c964f8-7f5c-4224-b848-1ab6c1413c7d",
+  "label": "2002 FIFA World Cup"
+}
+----
+|===
+
+
+=== `POST /tournament/<t_uuid>/competitor`
+
+Status code: 201 Created
+
+[frame=none,cols="m,m"]
+|===
+|Payload
+|Response
+
+a|
+[source,json]
+----
+{
+  "competitor_uuid": "5d1bd1d1-2679-432a-ac11-ebfebfa1bce9"
+}
+----
+a|
+[source,json]
+----
+{
+  "tournament": {
+    "uuid": "03c964f8-7f5c-4224-b848-1ab6c1413c7d",
+    "label": "2002 FIFA World Cup"
+  },
+  "competitor": {
+    "uuid": "5d1bd1d1-2679-432a-ac11-ebfebfa1bce9",
+    "label": "South Korea"
+  }
+}
+----
+|===
+
+=== `POST /tournament/<t_uuid>/competitor`
+
+Falhas
+
+[frame=none,cols="m,d"]
+|===
+|`404 Not Found`
+|Competidor inexistente
+
+|`404 Not Found`
+|Torneio inexistente
+
+|`409 Conflict`
+|Competidor já registrado no torneio
+
+|`409 Conflict`
+|Torneio já iniciado não permitindo novos registros
+|===
+
+
+=== `POST /tournament/<t_uuid>/start`
+
+Status code: 201 Created
+
+Payload: N/A
+
+=== `POST /tournament/<t_uuid>/start`
+
+Response
+
+[source,json]
+----
+{
+  "tournament": {
+    "uuid": "03c964f8-7f5c-4224-b848-1ab6c1413c7d",
+    "label": "2002 FIFA World Cup",
+    "startingRound": 1,
+    "numberCompetitors": 4
+  },
+  "competitors": [
+    {
+      "uuid": "de686e37-804b-4815-a507-d5879a240af6",
+      "label": "Germany"
+    },
+    {
+      "uuid": "5d1bd1d1-2679-432a-ac11-ebfebfa1bce9",
+      "label": "South Korea"
+    },
+    {
+      "uuid": "7f026276-0904-4a7b-ae14-8c66b95ffc9e",
+      "label": "Brazil"
+    },
+    {
+      "uuid": "15f4fe33-f317-4c4a-96e0-3b815dc481c6",
+      "label": "Turkey"
+    }
+  ],
+  "matches": [
+    {
+      "uuid": "1e172084-ec76-4f56-bd8e-7b3c170e1221",
+      "round": 1,
+      "position": 0,
+      "competitorA": {
+        "uuid": "de686e37-804b-4815-a507-d5879a240af6",
+        "label": "Germany"
+      },
+      "competitorB": {
+        "uuid": "5d1bd1d1-2679-432a-ac11-ebfebfa1bce9",
+        "label": "South Korea"
+      },
+      "winner": null,
+      "loser": null
+    },
+    {
+      "uuid": "3866cad6-ba40-44fb-96c6-09f1131c5649",
+      "round": 1,
+      "position": 1,
+      "competitorA": {
+        "uuid": "7f026276-0904-4a7b-ae14-8c66b95ffc9e",
+        "label": "Brazil"
+      },
+      "competitorB": {
+        "uuid": "15f4fe33-f317-4c4a-96e0-3b815dc481c6",
+        "label": "Turkey"
+      },
+      "winner": null,
+      "loser": null
+    },
+    {
+      "uuid": "1f1fc156-4382-427c-aefb-5ae10009b7ce",
+      "round": 0,
+      "position": 0,
+      "competitorA": null,
+      "competitorB": null,
+      "winner": null,
+      "loser": null
+    },
+    {
+      "uuid": "a9367a16-3f64-408b-9596-4029f7f60e62",
+      "round": 0,
+      "position": 1,
+      "competitorA": null,
+      "competitorB": null,
+      "winner": null,
+      "loser": null
+    }
+  ]
+}
+----
+
+=== `POST /tournament/<t_uuid>/start`
+
+Falhas
+
+[frame=none,cols="m,d"]
+|===
+|`404 Not Found`
+|Torneio inexistente
+
+|`422 Unprocessable Content`
+|Torneio não possui um competidor registrado
+
+|`409 Conflict`
+|Torneio já criou suas partidas
+|===
+
+
+=== `POST /match/<m_uuid>`
+
+Status code: 200 OK
+
+Payload:
+[source,json]
+----
+{
+  "winner_uuid": "7f026276-0904-4a7b-ae14-8c66b95ffc9e"
+}
+----
+
+
+=== `POST /match/<m_uuid>`
+
+Response
+
+[source,json]
+----
+{
+  "uuid": "a9367a16-3f64-408b-9596-4029f7f60e62",
+  "tournament": {
+    "uuid": "03c964f8-7f5c-4224-b848-1ab6c1413c7d",
+    "label": "2002 FIFA World Cup",
+    "startingRound": 1,
+    "numberCompetitors": 4
+  },
+  "round": 0,
+  "position": 0,
+  "competitorA": {
+    "uuid": "de686e37-804b-4815-a507-d5879a240af6",
+    "label": "Germany"
+  },
+  "competitorB": {
+    "uuid": "15f4fe33-f317-4c4a-96e0-3b815dc481c6",
+    "label": "Brazil"
+  },
+  "winner": {
+    "uuid": "15f4fe33-f317-4c4a-96e0-3b815dc481c6",
+    "label": "Brazil"
+  },
+  "loser": {
+    "uuid": "de686e37-804b-4815-a507-d5879a240af6",
+    "label": "Germany"
+  }
+}
+----
+
+=== `POST /match/<m_uuid>`
+
+Falhas
+
+[frame=none,cols="m,d"]
+|===
+|`404 Not Found`
+|Partida inexistente
+
+|`409 Conflict`
+|Partida já registrou seu resultado
+
+|`422 Unprocessable Content`
+|Partida não está pronta para registrar seu resultado devido a partidas anteriores com competidor faltante
+|===
+
+
+=== `GET /tournament/<t_uuid>/match`
+
+Status code: 200 OK
+
+Payload: N/A
+
+
+=== `GET /tournament/<t_uuid>/match`
+Response
+[source,json]
+----
+{
+  "tournament": {
+    "uuid": "03c964f8-7f5c-4224-b848-1ab6c1413c7d",
+    "label": "2002 FIFA World Cup",
+    "startingRound": 1,
+    "numberCompetitors": 4
+  },
+  "past": [
+    {
+      "uuid": "1e172084-ec76-4f56-bd8e-7b3c170e1221",
+      "round": 1,
+      "position": 0,
+      "competitorA": {
+        "uuid": "de686e37-804b-4815-a507-d5879a240af6",
+        "label": "Germany"
+      },
+      "competitorB": {
+        "uuid": "5d1bd1d1-2679-432a-ac11-ebfebfa1bce9",
+        "label": "South Korea"
+      },
+      "winner": {
+        "uuid": "de686e37-804b-4815-a507-d5879a240af6",
+        "label": "Germany"
+      },
+      "loser": {
+        "uuid": "5d1bd1d1-2679-432a-ac11-ebfebfa1bce9",
+        "label": "South Korea"
+      }
+    },
+    {
+      "uuid": "3866cad6-ba40-44fb-96c6-09f1131c5649",
+      "round": 1,
+      "position": 1,
+      "competitorA": {
+        "uuid": "7f026276-0904-4a7b-ae14-8c66b95ffc9e",
+        "label": "Brazil"
+      },
+      "competitorB": {
+        "uuid": "15f4fe33-f317-4c4a-96e0-3b815dc481c6",
+        "label": "Turkey"
+      },
+      "winner": {
+        "uuid": "7f026276-0904-4a7b-ae14-8c66b95ffc9e",
+        "label": "Brazil"
+      },
+      "loser": {
+        "uuid": "15f4fe33-f317-4c4a-96e0-3b815dc481c6",
+        "label": "Turkey"
+      }
+    },
+    {
+      "uuid": "a9367a16-3f64-408b-9596-4029f7f60e62",
+      "round": 0,
+      "position": 1,
+      "competitorA": {
+        "uuid": "5d1bd1d1-2679-432a-ac11-ebfebfa1bce9",
+        "label": "South Korea"
+      },
+      "competitorB": {
+        "uuid": "15f4fe33-f317-4c4a-96e0-3b815dc481c6",
+        "label": "Turkey"
+      },
+      "winner": {
+        "uuid": "15f4fe33-f317-4c4a-96e0-3b815dc481c6",
+        "label": "Turkey"
+      },
+      "loser": {
+        "uuid": "5d1bd1d1-2679-432a-ac11-ebfebfa1bce9",
+        "label": "South Korea"
+      }
+    }
+  ],
+  "upcoming": [
+    {
+      "uuid": "1f1fc156-4382-427c-aefb-5ae10009b7ce",
+      "round": 0,
+      "position": 0,
+      "competitorA": {
+        "uuid": "de686e37-804b-4815-a507-d5879a240af6",
+        "label": "Germany"
+      },
+      "competitorB": {
+        "uuid": "15f4fe33-f317-4c4a-96e0-3b815dc481c6",
+        "label": "Brazil"
+      },
+      "winner": null,
+      "loser": null
+    }
+  ]
+}
+----
+
+=== `GET /tournament/<t_uuid>/match`
+
+Falhas
+
+[frame=none,cols="m,d"]
+|===
+|`404 Not Found`
+|Torneio inexistente
+
+|`422 Unprocessable Content`
+|Torneio ainda não criou suas partidas
+|===
+
+
+=== `GET /tournament/<t_uuid>/result`
+
+Status code: 200 OK
+
+Payload: N/A
+
+
+=== `GET /tournament/<t_uuid>/result`
+Response
+[source,json]
+----
+{
+  "tournament": {
+    "uuid": "03c964f8-7f5c-4224-b848-1ab6c1413c7d",
+    "label": "2002 FIFA World Cup",
+    "startingRound": 1,
+    "numberCompetitors": 4
+  },
+  "top4": [
+    {
+      "uuid": "7f026276-0904-4a7b-ae14-8c66b95ffc9e",
+      "label": "Brazil"
+    },
+    {
+      "uuid": "de686e37-804b-4815-a507-d5879a240af6",
+      "label": "Germany"
+    },
+    {
+      "uuid": "15f4fe33-f317-4c4a-96e0-3b815dc481c6",
+      "label": "Turkey"
+    },
+    {
+      "uuid": "5d1bd1d1-2679-432a-ac11-ebfebfa1bce9",
+      "label": "South Korea"
+    }
+  ]
+}
+----
+
+=== `GET /tournament/<t_uuid>/result`
+
+Falhas
+
+[frame=none,cols="m,d"]
+|===
+|`404 Not Found`
+|Torneio inexistente
+
+|`422 Unprocessable Content`
+|Torneio ainda não criou suas partidas
+
+|`422 Unprocessable Content`
+|Torneio ainda não está pronto para exibir seus Top 4 competidores
+|===

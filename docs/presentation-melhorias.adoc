@@ -1,0 +1,88 @@
+== Melhorias Feitas
+
+* Refatoração para melhorar legibilidade
+
+=== Melhorias Feitas
+
+* Endpoints para melhorar usabilidade
+
+image:ADR7.png[título e data do ADR7,width=900]
+
+=== Endpoints para melhorar usabilidade
+
+[frame=none,cols="h,m"]
+|===
+|
+|Endpoint
+
+a|[.small]#Listagem de competidores#
+|GET /competitor
+
+a|[.small]#Detalhe de competidor com torneios passados, em andamento e futuros#
+|GET /competitor/<c_uuid>
+
+a|[.small]#Detalhe de partida#
+|GET /match/<m_uuid>
+|===
+
+=== Endpoints para melhorar usabilidade
+
+[frame=none,cols="h,m"]
+|===
+|
+|Endpoint
+
+a|[.small]#Listagem de torneios#
+|GET /tournament
+
+a|[.small]#Listagem de competidores em um torneio#
+|GET /tournament/<t_uuid>/competitor
+
+a|[.small]#Listagem de todas as partidas de um competidor em um torneio dividido em passadas e futuras#
+|GET /competitor/<c_uuid>
+|===
+
+
+=== OpenAPI após Melhorias Feitas
+image:2024.1.1.openapi.png[OpenAPI para versão com melhorias,width=800]
+
+
+=== Melhorias Feitas
+
+* Mudança de SQLite para PostgreSQL para melhorar escalabilidade
+
+image:ADR8.png[título e data do ADR8,width=900]
+
+=== Melhorias Feitas
+
+* Substituição de venv local para o uso de Docker Compose com compartilhamento de arquivos locais
+
+=== pytest-cov após Melhorias Feitas
+
+```
+ Name                                             Stmts   Miss  Cover
+ --------------------------------------------------------------------
+ src/matamata/__init__.py                             1      0   100%
+ src/matamata/database.py                             7      2    71%
+ src/matamata/main.py                                 7      0   100%
+ src/matamata/models/__init__.py                      5      0   100%
+ src/matamata/models/base.py                         14      0   100%
+ src/matamata/models/competitor.py                   16      0   100%
+ src/matamata/models/constants.py                    10      0   100%
+ src/matamata/models/exceptions.py                    4      0   100%
+ src/matamata/models/match.py                        25      0   100%
+ src/matamata/models/tournament.py                   31      0   100%
+ src/matamata/models/tournament_competitor.py        15      0   100%
+ src/matamata/routers/__init__.py                     0      0   100%
+ src/matamata/routers/competitor.py                  34      0   100%
+ src/matamata/routers/match.py                       32      0   100%
+ src/matamata/routers/tournament.py                 124      0   100%
+ src/matamata/schemas.py                             94      2    98%
+ src/matamata/services/__init__.py                    2      0   100%
+ src/matamata/services/exceptions.py                 10      0   100%
+ src/matamata/services/register_match_result.py      86      0   100%
+ src/matamata/services/start_tournament.py           93      2    98%
+ src/matamata/settings.py                             5      0   100%
+ --------------------------------------------------------------------
+ TOTAL                                              615      6    99%
+```

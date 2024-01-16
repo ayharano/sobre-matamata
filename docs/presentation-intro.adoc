@@ -1,0 +1,24 @@
+== Enunciado
+
+* Pequeno sistema e API HTTP
+* Sistema de torneio por chaves eliminatórias
+
+=== Regras
+* Pareamento inicial
+* Cada rodada
+* Rodada final
+
+=== Pareamento inicial
+
+* Competidores divididos em duplas de forma aleatória
+* Caso não pareie todos os competidores, alguns passam automaticamente para a segunda rodada
+
+=== Cada rodada
+
+* Competem entre si
+* Vencedores para a próxima rodada e competem contra outros vencedores
+
+=== Rodada final
+
+* Vencedores da penúltima rodada: partida final com vencedor do torneio e segundo lugar
+* Perdedores da penúltima rodada: partida de terceira lugar com terceiro e o quarto lugar
